@@ -46,6 +46,11 @@ class Project extends Model
         return $this->hasMany(Transaction::class, 'project_id', 'id');
     }
 
+    public function invoices()
+    {
+        return $this->hasMany(Invoice::class, 'project_id', 'id');
+    }
+
     public function client()
     {
         return $this->belongsTo(Client::class, 'client_id');

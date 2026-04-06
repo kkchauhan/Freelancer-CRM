@@ -74,6 +74,14 @@
                         </a>
                     </li>
                 @endcan
+                @can('invoice_access')
+                    <li class="nav-item">
+                        <a href="{{ route("admin.invoices.index") }}" class="nav-link {{ request()->is('admin/invoices') || request()->is('admin/invoices/*') ? 'active' : '' }}">
+                            <i class="fa-fw fas fa-file-invoice"></i>
+                            <p><span>Invoices</span></p>
+                        </a>
+                    </li>
+                @endcan
 
                 <li class="nav-header">SETTINGS</li>
 
