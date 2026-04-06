@@ -67,6 +67,47 @@ class ClientReportController extends Controller
             }
         }
 
+        // Build chart data: aggregate across all currencies for monthly trend
+        $chartLabels = [];
+        $chartIncome = [];
+        $chartExpenses = [];
+        $chartFees = [];
+        $chartTotal = [];
+
+        // Overall summary totals
+        $summaryIncome = 0;
+        $summaryExpenses = 0;
+        $summaryFees = 0;
+        $summaryTotal = 0;
+
+        // Sort entries by date for chart chronological order
+        ksort($entries);
+
+        foreach ($entries as $date => $currencies) {
+            $monthIncome = 0;
+            $monthExpenses = 0;
+            $monthFees = 0;
+            $monthTotal = 0;
+
+            foreach ($currencies as $currency => $row) {
+                $monthIncome += $row['income'];
+                $monthExpenses += abs($row['expenses']);
+                $monthFees += $row['fees'];
+                $monthTotal += $row['total'];
+            }
+
+            $chartLabels[] = $date;
+            $chartIncome[] = round($monthIncome, 2);
+            $chartExpenses[] = round($monthExpenses, 2);
+            $chartFees[] = round($monthFees, 2);
+            $chartTotal[] = round($monthTotal, 2);
+
+            $summaryIncome += $monthIncome;
+            $summaryExpenses += $monthExpenses;
+            $summaryFees += $monthFees;
+            $summaryTotal += $monthTotal;
+        }
+
         $projects = Project::pluck('name', 'id')->prepend('--- ' . trans('cruds.clientReport.reports.allProjects') . ' ---', '');
 
         if ($request->has('project')) {
@@ -78,7 +119,16 @@ class ClientReportController extends Controller
         return view('admin.clientReports.index', compact(
             'entries',
             'projects',
-            'currentProject'
+            'currentProject',
+            'chartLabels',
+            'chartIncome',
+            'chartExpenses',
+            'chartFees',
+            'chartTotal',
+            'summaryIncome',
+            'summaryExpenses',
+            'summaryFees',
+            'summaryTotal'
         ));
     }
 }
