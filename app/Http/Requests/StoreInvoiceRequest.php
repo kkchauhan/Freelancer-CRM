@@ -37,6 +37,17 @@ class StoreInvoiceRequest extends FormRequest
             'status'       => [
                 'required',
             ],
+            'tax_rate'     => [
+                'nullable',
+                'numeric',
+                'min:0',
+                'max:100',
+            ],
+            'payment_terms' => [
+                'nullable',
+                'string',
+                'max:255',
+            ],
         ];
     }
 }

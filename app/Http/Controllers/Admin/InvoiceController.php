@@ -19,7 +19,7 @@ class InvoiceController extends Controller
     {
         abort_if(Gate::denies('invoice_access'), Response::HTTP_FORBIDDEN, '403 Forbidden');
 
-        $invoices = Invoice::with(['project'])->get();
+        $invoices = Invoice::with(['project.client'])->get();
 
         return view('admin.invoices.index', compact('invoices'));
     }
@@ -62,7 +62,7 @@ class InvoiceController extends Controller
     {
         abort_if(Gate::denies('invoice_show'), Response::HTTP_FORBIDDEN, '403 Forbidden');
 
-        $invoice->load('project');
+        $invoice->load('project.client');
 
         return view('admin.invoices.show', compact('invoice'));
     }

@@ -23,13 +23,22 @@
 
                         </th>
                         <th>
-                            ID
+                            Invoice #
                         </th>
                         <th>
                             Project
                         </th>
                         <th>
+                            Client
+                        </th>
+                        <th>
                             Amount
+                        </th>
+                        <th>
+                            Tax
+                        </th>
+                        <th>
+                            Total
                         </th>
                         <th>
                             Invoice Date
@@ -52,13 +61,26 @@
 
                             </td>
                             <td>
-                                {{ $invoice->id ?? '' }}
+                                <strong>{{ $invoice->invoice_number ?? 'INV-'.str_pad($invoice->id, 4, '0', STR_PAD_LEFT) }}</strong>
                             </td>
                             <td>
                                 {{ $invoice->project->name ?? '' }}
                             </td>
                             <td>
-                                {{ $invoice->amount ?? '' }}
+                                {{ $invoice->project->client->first_name ?? '' }} {{ $invoice->project->client->last_name ?? '' }}
+                            </td>
+                            <td>
+                                ${{ number_format($invoice->amount, 2) }}
+                            </td>
+                            <td>
+                                @if($invoice->tax_rate > 0)
+                                    {{ $invoice->tax_rate }}%
+                                @else
+                                    —
+                                @endif
+                            </td>
+                            <td>
+                                <strong>${{ number_format($invoice->total, 2) }}</strong>
                             </td>
                             <td>
                                 {{ $invoice->invoice_date ?? '' }}
@@ -67,7 +89,19 @@
                                 {{ $invoice->due_date ?? '' }}
                             </td>
                             <td>
-                                {{ $invoice->status ?? '' }}
+                                @php
+                                    $statusColors = [
+                                        'paid'      => 'background: rgba(6, 214, 160, 0.15); color: #06d6a0; border: 1px solid rgba(6, 214, 160, 0.3);',
+                                        'unpaid'    => 'background: rgba(255, 209, 102, 0.15); color: #ffd166; border: 1px solid rgba(255, 209, 102, 0.3);',
+                                        'partial'   => 'background: rgba(17, 138, 178, 0.15); color: #118ab2; border: 1px solid rgba(17, 138, 178, 0.3);',
+                                        'overdue'   => 'background: rgba(239, 71, 111, 0.15); color: #ef476f; border: 1px solid rgba(239, 71, 111, 0.3);',
+                                        'cancelled' => 'background: rgba(90, 106, 126, 0.15); color: #8899aa; border: 1px solid rgba(90, 106, 126, 0.3);',
+                                    ];
+                                    $style = $statusColors[$invoice->status] ?? $statusColors['unpaid'];
+                                @endphp
+                                <span style="{{ $style }} padding: 3px 10px; border-radius: 20px; font-size: 0.75rem; font-weight: 600; text-transform: uppercase; letter-spacing: 0.03em;">
+                                    {{ ucfirst($invoice->status) }}
+                                </span>
                             </td>
                             <td>
                                 @can('invoice_show')
@@ -91,7 +125,7 @@
                                 @endcan
                                 
                                 <a class="btn btn-xs btn-warning" href="{{ route('admin.invoices.downloadPDF', $invoice->id) }}">
-                                    Download PDF
+                                    <i class="fas fa-file-pdf"></i> PDF
                                 </a>
                             </td>
 

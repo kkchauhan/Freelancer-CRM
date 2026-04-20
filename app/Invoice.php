@@ -22,16 +22,58 @@ class Invoice extends Model
     ];
 
     protected $fillable = [
+        'invoice_number',
         'project_id',
         'amount',
+        'tax_rate',
         'invoice_date',
         'due_date',
         'status',
+        'payment_terms',
         'notes',
         'created_at',
         'updated_at',
         'deleted_at',
     ];
+
+    /**
+     * Auto-generate invoice number on creation.
+     */
+    protected static function booted(): void
+    {
+        static::creating(function (Invoice $invoice) {
+            if (empty($invoice->invoice_number)) {
+                $invoice->invoice_number = static::generateInvoiceNumber();
+            }
+        });
+    }
+
+    /**
+     * Generate a sequential invoice number like INV-0001.
+     */
+    public static function generateInvoiceNumber(): string
+    {
+        $latest = static::withTrashed()->orderBy('id', 'desc')->first();
+        $nextId = $latest ? $latest->id + 1 : 1;
+
+        return 'INV-' . str_pad($nextId, 4, '0', STR_PAD_LEFT);
+    }
+
+    /**
+     * Get the computed tax amount.
+     */
+    public function getTaxAmountAttribute(): float
+    {
+        return round(($this->amount ?? 0) * (($this->tax_rate ?? 0) / 100), 2);
+    }
+
+    /**
+     * Get the computed total (amount + tax).
+     */
+    public function getTotalAttribute(): float
+    {
+        return round(($this->amount ?? 0) + $this->tax_amount, 2);
+    }
 
     public function project()
     {
