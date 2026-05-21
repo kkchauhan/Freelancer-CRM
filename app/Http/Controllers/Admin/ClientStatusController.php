@@ -68,7 +68,7 @@ class ClientStatusController extends Controller
 
     public function massDestroy(MassDestroyClientStatusRequest $request)
     {
-        ClientStatus::whereIn('id', request('ids'))->delete();
+        ClientStatus::whereIn('id', $request->validated()['ids'])->delete();
 
         return response(null, Response::HTTP_NO_CONTENT);
     }

@@ -78,7 +78,7 @@ class InvoiceController extends Controller
 
     public function massDestroy(MassDestroyInvoiceRequest $request)
     {
-        Invoice::whereIn('id', request('ids'))->delete();
+        Invoice::whereIn('id', $request->validated()['ids'])->delete();
 
         return response(null, Response::HTTP_NO_CONTENT);
     }

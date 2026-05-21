@@ -68,7 +68,7 @@ class ProjectStatusController extends Controller
 
     public function massDestroy(MassDestroyProjectStatusRequest $request)
     {
-        ProjectStatus::whereIn('id', request('ids'))->delete();
+        ProjectStatus::whereIn('id', $request->validated()['ids'])->delete();
 
         return response(null, Response::HTTP_NO_CONTENT);
     }

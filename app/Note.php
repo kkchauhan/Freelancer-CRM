@@ -11,10 +11,10 @@ class Note extends Model
 
     public $table = 'notes';
 
-    protected $dates = [
-        'created_at',
-        'updated_at',
-        'deleted_at',
+    protected $casts = [
+        'created_at' => 'datetime',
+        'updated_at' => 'datetime',
+        'deleted_at' => 'datetime',
     ];
 
     protected $fillable = [
@@ -25,7 +25,7 @@ class Note extends Model
         'deleted_at',
     ];
 
-    public function project()
+    public function project(): \Illuminate\Database\Eloquent\Relations\BelongsTo
     {
         return $this->belongsTo(Project::class, 'project_id');
     }

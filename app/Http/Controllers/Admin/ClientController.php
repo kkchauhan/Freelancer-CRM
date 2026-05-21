@@ -77,7 +77,7 @@ class ClientController extends Controller
 
     public function massDestroy(MassDestroyClientRequest $request)
     {
-        Client::whereIn('id', request('ids'))->delete();
+        Client::whereIn('id', $request->validated()['ids'])->delete();
 
         return response(null, Response::HTTP_NO_CONTENT);
     }

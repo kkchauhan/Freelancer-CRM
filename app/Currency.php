@@ -11,10 +11,10 @@ class Currency extends Model
 
     public $table = 'currencies';
 
-    protected $dates = [
-        'created_at',
-        'updated_at',
-        'deleted_at',
+    protected $casts = [
+        'created_at' => 'datetime',
+        'updated_at' => 'datetime',
+        'deleted_at' => 'datetime',
     ];
 
     protected $fillable = [
@@ -26,7 +26,7 @@ class Currency extends Model
         'main_currency',
     ];
 
-    public function transactions()
+    public function transactions(): \Illuminate\Database\Eloquent\Relations\HasMany
     {
         return $this->hasMany(Transaction::class, 'currency_id', 'id');
     }

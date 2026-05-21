@@ -11,10 +11,10 @@ class ClientStatus extends Model
 
     public $table = 'client_statuses';
 
-    protected $dates = [
-        'created_at',
-        'updated_at',
-        'deleted_at',
+    protected $casts = [
+        'created_at' => 'datetime',
+        'updated_at' => 'datetime',
+        'deleted_at' => 'datetime',
     ];
 
     protected $fillable = [
@@ -24,7 +24,7 @@ class ClientStatus extends Model
         'deleted_at',
     ];
 
-    public function clients()
+    public function clients(): \Illuminate\Database\Eloquent\Relations\HasMany
     {
         return $this->hasMany(Client::class, 'status_id', 'id');
     }

@@ -16,48 +16,48 @@
     <!-- Quick Stats -->
     <div class="row">
         <div class="col-lg-3 col-6">
-            <div class="small-box" style="background: linear-gradient(135deg, #1a2332, #243044); border: 1px solid var(--crm-glass-border); border-radius: var(--crm-radius); padding: 1.5rem; position: relative; overflow: hidden; box-shadow: var(--crm-shadow-sm); margin-bottom: 1.5rem;">
+            <div class="dashboard-stat-card card-stat-clients">
                 <div class="inner">
-                    <h3 style="font-size: 2.2rem; margin: 0; color: #fff;">{{ $data['clientsCount'] }}</h3>
-                    <p style="color: var(--crm-text-secondary); margin: 0; font-weight: 500;">Total Clients</p>
+                    <h3>{{ $data['clientsCount'] }}</h3>
+                    <p>Total Clients</p>
                 </div>
-                <div class="icon" style="position: absolute; right: 1rem; top: 1rem; font-size: 3.5rem; color: rgba(255, 255, 255, 0.03);">
+                <div class="icon-wrapper">
                     <i class="fas fa-user-tie"></i>
                 </div>
             </div>
         </div>
         
         <div class="col-lg-3 col-6">
-            <div class="small-box" style="background: linear-gradient(135deg, #1a2332, #243044); border: 1px solid var(--crm-glass-border); border-radius: var(--crm-radius); padding: 1.5rem; position: relative; overflow: hidden; box-shadow: var(--crm-shadow-sm); margin-bottom: 1.5rem;">
+            <div class="dashboard-stat-card card-stat-projects">
                 <div class="inner">
-                    <h3 style="font-size: 2.2rem; margin: 0; color: #fff;">{{ $data['projectsCount'] }}</h3>
-                    <p style="color: var(--crm-text-secondary); margin: 0; font-weight: 500;">Total Projects</p>
+                    <h3>{{ $data['projectsCount'] }}</h3>
+                    <p>Total Projects</p>
                 </div>
-                <div class="icon" style="position: absolute; right: 1rem; top: 1rem; font-size: 3.5rem; color: rgba(255, 255, 255, 0.03);">
+                <div class="icon-wrapper">
                     <i class="fas fa-briefcase"></i>
                 </div>
             </div>
         </div>
 
         <div class="col-lg-3 col-6">
-            <div class="small-box" style="background: linear-gradient(135deg, #1a2332, #243044); border: 1px solid var(--crm-glass-border); border-radius: var(--crm-radius); padding: 1.5rem; position: relative; overflow: hidden; box-shadow: var(--crm-shadow-sm); margin-bottom: 1.5rem;">
+            <div class="dashboard-stat-card card-stat-transactions">
                 <div class="inner">
-                    <h3 style="font-size: 2.2rem; margin: 0; color: #fff;">{{ $data['transactionsCount'] }}</h3>
-                    <p style="color: var(--crm-text-secondary); margin: 0; font-weight: 500;">Transactions</p>
+                    <h3>{{ $data['transactionsCount'] }}</h3>
+                    <p>Transactions</p>
                 </div>
-                <div class="icon" style="position: absolute; right: 1rem; top: 1rem; font-size: 3.5rem; color: rgba(255, 255, 255, 0.03);">
+                <div class="icon-wrapper">
                     <i class="fas fa-credit-card"></i>
                 </div>
             </div>
         </div>
 
         <div class="col-lg-3 col-6">
-            <div class="small-box" style="background: linear-gradient(135deg, #1a2332, #243044); border: 1px solid var(--crm-glass-border); border-radius: var(--crm-radius); padding: 1.5rem; position: relative; overflow: hidden; box-shadow: var(--crm-shadow-sm); margin-bottom: 1.5rem;">
+            <div class="dashboard-stat-card card-stat-documents">
                 <div class="inner">
-                    <h3 style="font-size: 2.2rem; margin: 0; color: #fff;">{{ $data['documentsCount'] }}</h3>
-                    <p style="color: var(--crm-text-secondary); margin: 0; font-weight: 500;">Documents</p>
+                    <h3>{{ $data['documentsCount'] }}</h3>
+                    <p>Documents</p>
                 </div>
-                <div class="icon" style="position: absolute; right: 1rem; top: 1rem; font-size: 3.5rem; color: rgba(255, 255, 255, 0.03);">
+                <div class="icon-wrapper">
                     <i class="fas fa-file-alt"></i>
                 </div>
             </div>
@@ -122,22 +122,26 @@
         </div>
 
         <div class="col-lg-4">
-            <div class="card bg-gradient-dark">
+            <div class="card">
                 <div class="card-header border-0">
                     <h3 class="card-title">Quick Actions</h3>
                 </div>
                 <div class="card-body">
-                    <a href="{{ route('admin.clients.create') }}" class="btn btn-primary btn-block mb-3" style="text-align: left;">
-                        <i class="fas fa-plus-circle mr-2"></i> Add New Client
+                    <a href="{{ route('admin.clients.create') }}" class="quick-action-btn qa-client btn-block mb-3">
+                        <span><i class="fas fa-plus-circle mr-2"></i> Add New Client</span>
+                        <i class="fas fa-arrow-right arrow-icon"></i>
                     </a>
-                    <a href="{{ route('admin.projects.create') }}" class="btn btn-success btn-block mb-3" style="text-align: left;">
-                        <i class="fas fa-plus-circle mr-2"></i> Create Project
+                    <a href="{{ route('admin.projects.create') }}" class="quick-action-btn qa-project btn-block mb-3">
+                        <span><i class="fas fa-plus-circle mr-2"></i> Create Project</span>
+                        <i class="fas fa-arrow-right arrow-icon"></i>
                     </a>
-                    <a href="{{ route('admin.transactions.create') }}" class="btn btn-info btn-block mb-3" style="text-align: left;">
-                        <i class="fas fa-plus-circle mr-2"></i> Record Transaction
+                    <a href="{{ route('admin.transactions.create') }}" class="quick-action-btn qa-transaction btn-block mb-3">
+                        <span><i class="fas fa-plus-circle mr-2"></i> Record Transaction</span>
+                        <i class="fas fa-arrow-right arrow-icon"></i>
                     </a>
-                    <a href="{{ route('admin.client-reports.index') }}" class="btn btn-warning btn-block" style="text-align: left;">
-                        <i class="fas fa-chart-line mr-2"></i> View Reports
+                    <a href="{{ route('admin.client-reports.index') }}" class="quick-action-btn qa-reports btn-block">
+                        <span><i class="fas fa-chart-line mr-2"></i> View Reports</span>
+                        <i class="fas fa-arrow-right arrow-icon"></i>
                     </a>
                 </div>
             </div>

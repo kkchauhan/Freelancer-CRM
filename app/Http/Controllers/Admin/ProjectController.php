@@ -82,7 +82,7 @@ class ProjectController extends Controller
 
     public function massDestroy(MassDestroyProjectRequest $request)
     {
-        Project::whereIn('id', request('ids'))->delete();
+        Project::whereIn('id', $request->validated()['ids'])->delete();
 
         return response(null, Response::HTTP_NO_CONTENT);
     }

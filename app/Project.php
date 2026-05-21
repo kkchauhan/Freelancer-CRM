@@ -12,11 +12,11 @@ class Project extends Model
 
     public $table = 'projects';
 
-    protected $dates = [
-        'start_date',
-        'created_at',
-        'updated_at',
-        'deleted_at',
+    protected $casts = [
+        'start_date' => 'date',
+        'created_at' => 'datetime',
+        'updated_at' => 'datetime',
+        'deleted_at' => 'datetime',
     ];
 
     protected $fillable = [
@@ -31,27 +31,27 @@ class Project extends Model
         'description',
     ];
 
-    public function notes()
+    public function notes(): \Illuminate\Database\Eloquent\Relations\HasMany
     {
         return $this->hasMany(Note::class, 'project_id', 'id');
     }
 
-    public function documents()
+    public function documents(): \Illuminate\Database\Eloquent\Relations\HasMany
     {
         return $this->hasMany(Document::class, 'project_id', 'id');
     }
 
-    public function transactions()
+    public function transactions(): \Illuminate\Database\Eloquent\Relations\HasMany
     {
         return $this->hasMany(Transaction::class, 'project_id', 'id');
     }
 
-    public function invoices()
+    public function invoices(): \Illuminate\Database\Eloquent\Relations\HasMany
     {
         return $this->hasMany(Invoice::class, 'project_id', 'id');
     }
 
-    public function client()
+    public function client(): \Illuminate\Database\Eloquent\Relations\BelongsTo
     {
         return $this->belongsTo(Client::class, 'client_id');
     }
@@ -66,7 +66,7 @@ class Project extends Model
         $this->attributes['start_date'] = $value ? Carbon::createFromFormat(config('panel.date_format'), $value)->format('Y-m-d') : null;
     }
 
-    public function status()
+    public function status(): \Illuminate\Database\Eloquent\Relations\BelongsTo
     {
         return $this->belongsTo(ProjectStatus::class, 'status_id');
     }

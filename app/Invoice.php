@@ -13,12 +13,12 @@ class Invoice extends Model
 
     public $table = 'invoices';
 
-    protected $dates = [
-        'invoice_date',
-        'due_date',
-        'created_at',
-        'updated_at',
-        'deleted_at',
+    protected $casts = [
+        'invoice_date' => 'date',
+        'due_date' => 'date',
+        'created_at' => 'datetime',
+        'updated_at' => 'datetime',
+        'deleted_at' => 'datetime',
     ];
 
     protected $fillable = [
@@ -39,43 +39,43 @@ class Invoice extends Model
     /**
      * Auto-generate invoice number on creation.
      */
-    protected static function booted(): void
-    {
-        static::creating(function (Invoice $invoice) {
-            if (empty($invoice->invoice_number)) {
-                $invoice->invoice_number = static::generateInvoiceNumber();
-            }
-        });
-    }
+     protected static function booted(): void
+     {
+         static::creating(function (Invoice $invoice) {
+             if (empty($invoice->invoice_number)) {
+                 $invoice->invoice_number = static::generateInvoiceNumber();
+             }
+         });
+     }
 
-    /**
-     * Generate a sequential invoice number like INV-0001.
-     */
-    public static function generateInvoiceNumber(): string
-    {
-        $latest = static::withTrashed()->orderBy('id', 'desc')->first();
-        $nextId = $latest ? $latest->id + 1 : 1;
+     /**
+      * Generate a sequential invoice number like INV-0001.
+      */
+     public static function generateInvoiceNumber(): string
+     {
+         $latest = static::withTrashed()->orderBy('id', 'desc')->first();
+         $nextId = $latest ? $latest->id + 1 : 1;
 
-        return 'INV-' . str_pad($nextId, 4, '0', STR_PAD_LEFT);
-    }
+         return 'INV-' . str_pad($nextId, 4, '0', STR_PAD_LEFT);
+     }
 
-    /**
-     * Get the computed tax amount.
-     */
-    public function getTaxAmountAttribute(): float
-    {
-        return round(($this->amount ?? 0) * (($this->tax_rate ?? 0) / 100), 2);
-    }
+     /**
+      * Get the computed tax amount.
+      */
+     public function getTaxAmountAttribute(): float
+     {
+         return round(($this->amount ?? 0) * (($this->tax_rate ?? 0) / 100), 2);
+     }
 
-    /**
-     * Get the computed total (amount + tax).
-     */
-    public function getTotalAttribute(): float
-    {
-        return round(($this->amount ?? 0) + $this->tax_amount, 2);
-    }
+     /**
+      * Get the computed total (amount + tax).
+      */
+     public function getTotalAttribute(): float
+     {
+         return round(($this->amount ?? 0) + $this->tax_amount, 2);
+     }
 
-    public function project()
+    public function project(): \Illuminate\Database\Eloquent\Relations\BelongsTo
     {
         return $this->belongsTo(Project::class, 'project_id');
     }

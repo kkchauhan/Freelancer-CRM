@@ -68,7 +68,7 @@ class CurrencyController extends Controller
 
     public function massDestroy(MassDestroyCurrencyRequest $request)
     {
-        Currency::whereIn('id', request('ids'))->delete();
+        Currency::whereIn('id', $request->validated()['ids'])->delete();
 
         return response(null, Response::HTTP_NO_CONTENT);
     }

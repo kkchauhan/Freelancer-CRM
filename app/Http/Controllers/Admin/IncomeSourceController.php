@@ -68,7 +68,7 @@ class IncomeSourceController extends Controller
 
     public function massDestroy(MassDestroyIncomeSourceRequest $request)
     {
-        IncomeSource::whereIn('id', request('ids'))->delete();
+        IncomeSource::whereIn('id', $request->validated()['ids'])->delete();
 
         return response(null, Response::HTTP_NO_CONTENT);
     }

@@ -22,45 +22,45 @@
 {{-- Summary Cards --}}
 <div class="row mb-4">
     <div class="col-lg-3 col-6">
-        <div class="small-box bg-success">
+        <div class="dashboard-stat-card card-stat-projects">
             <div class="inner">
-                <h4>{{ number_format($summaryIncome, 2) }}</h4>
+                <h3>{{ number_format($summaryIncome, 2) }}</h3>
                 <p>{{ trans('cruds.clientReport.reports.income') }}</p>
             </div>
-            <div class="icon">
+            <div class="icon-wrapper">
                 <i class="fas fa-arrow-up"></i>
             </div>
         </div>
     </div>
     <div class="col-lg-3 col-6">
-        <div class="small-box bg-danger">
+        <div class="dashboard-stat-card card-stat-documents">
             <div class="inner">
-                <h4>{{ number_format($summaryExpenses, 2) }}</h4>
+                <h3>{{ number_format($summaryExpenses, 2) }}</h3>
                 <p>{{ trans('cruds.clientReport.reports.expenses') }}</p>
             </div>
-            <div class="icon">
+            <div class="icon-wrapper">
                 <i class="fas fa-arrow-down"></i>
             </div>
         </div>
     </div>
     <div class="col-lg-3 col-6">
-        <div class="small-box bg-warning">
+        <div class="dashboard-stat-card card-stat-transactions">
             <div class="inner">
-                <h4>{{ number_format($summaryFees, 2) }}</h4>
+                <h3>{{ number_format($summaryFees, 2) }}</h3>
                 <p>{{ trans('cruds.clientReport.reports.fees') }}</p>
             </div>
-            <div class="icon">
+            <div class="icon-wrapper">
                 <i class="fas fa-percentage"></i>
             </div>
         </div>
     </div>
     <div class="col-lg-3 col-6">
-        <div class="small-box bg-info">
+        <div class="dashboard-stat-card card-stat-clients">
             <div class="inner">
-                <h4>{{ number_format($summaryTotal, 2) }}</h4>
+                <h3>{{ number_format($summaryTotal, 2) }}</h3>
                 <p>{{ trans('cruds.clientReport.reports.total') }}</p>
             </div>
-            <div class="icon">
+            <div class="icon-wrapper">
                 <i class="fas fa-wallet"></i>
             </div>
         </div>

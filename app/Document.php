@@ -18,10 +18,10 @@ class Document extends Model implements HasMedia
         'document_file',
     ];
 
-    protected $dates = [
-        'created_at',
-        'updated_at',
-        'deleted_at',
+    protected $casts = [
+        'created_at' => 'datetime',
+        'updated_at' => 'datetime',
+        'deleted_at' => 'datetime',
     ];
 
     protected $fillable = [
@@ -38,7 +38,7 @@ class Document extends Model implements HasMedia
         $this->addMediaConversion('thumb')->width(50)->height(50);
     }
 
-    public function project()
+    public function project(): \Illuminate\Database\Eloquent\Relations\BelongsTo
     {
         return $this->belongsTo(Project::class, 'project_id');
     }

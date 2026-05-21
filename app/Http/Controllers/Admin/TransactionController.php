@@ -92,7 +92,7 @@ class TransactionController extends Controller
 
     public function massDestroy(MassDestroyTransactionRequest $request)
     {
-        Transaction::whereIn('id', request('ids'))->delete();
+        Transaction::whereIn('id', $request->validated()['ids'])->delete();
 
         return response(null, Response::HTTP_NO_CONTENT);
     }

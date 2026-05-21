@@ -38,7 +38,7 @@ class ClientReportController extends Controller
                     $entries[$date] = [];
                 }
 
-                $currency = $row->currency->code;
+                $currency = $row->currency ? $row->currency->code : 'USD';
 
                 if (!isset($entries[$date][$currency])) {
                     $entries[$date][$currency] = [
@@ -59,7 +59,7 @@ class ClientReportController extends Controller
                     $expenses += $row->amount;
                 }
 
-                if (!is_null($row->income_source->fee_percent)) {
+                if ($row->income_source && !is_null($row->income_source->fee_percent)) {
                     $fees = $row->amount * ($row->income_source->fee_percent / 100);
                 }
 

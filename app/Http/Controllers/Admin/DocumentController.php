@@ -98,7 +98,7 @@ class DocumentController extends Controller
 
     public function massDestroy(MassDestroyDocumentRequest $request)
     {
-        Document::whereIn('id', request('ids'))->delete();
+        Document::whereIn('id', $request->validated()['ids'])->delete();
 
         return response(null, Response::HTTP_NO_CONTENT);
     }

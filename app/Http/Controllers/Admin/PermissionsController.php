@@ -68,7 +68,7 @@ class PermissionsController extends Controller
 
     public function massDestroy(MassDestroyPermissionRequest $request)
     {
-        Permission::whereIn('id', request('ids'))->delete();
+        Permission::whereIn('id', $request->validated()['ids'])->delete();
 
         return response(null, Response::HTTP_NO_CONTENT);
     }

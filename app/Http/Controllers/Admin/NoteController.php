@@ -77,7 +77,7 @@ class NoteController extends Controller
 
     public function massDestroy(MassDestroyNoteRequest $request)
     {
-        Note::whereIn('id', request('ids'))->delete();
+        Note::whereIn('id', $request->validated()['ids'])->delete();
 
         return response(null, Response::HTTP_NO_CONTENT);
     }

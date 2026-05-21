@@ -11,10 +11,10 @@ class IncomeSource extends Model
 
     public $table = 'income_sources';
 
-    protected $dates = [
-        'created_at',
-        'updated_at',
-        'deleted_at',
+    protected $casts = [
+        'created_at' => 'datetime',
+        'updated_at' => 'datetime',
+        'deleted_at' => 'datetime',
     ];
 
     protected $fillable = [
@@ -25,7 +25,7 @@ class IncomeSource extends Model
         'fee_percent',
     ];
 
-    public function transactions()
+    public function transactions(): \Illuminate\Database\Eloquent\Relations\HasMany
     {
         return $this->hasMany(Transaction::class, 'income_source_id', 'id');
     }

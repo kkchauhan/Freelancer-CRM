@@ -12,11 +12,11 @@ class Transaction extends Model
 
     public $table = 'transactions';
 
-    protected $dates = [
-        'updated_at',
-        'created_at',
-        'deleted_at',
-        'transaction_date',
+    protected $casts = [
+        'transaction_date' => 'date',
+        'created_at' => 'datetime',
+        'updated_at' => 'datetime',
+        'deleted_at' => 'datetime',
     ];
 
     protected $fillable = [
@@ -33,22 +33,22 @@ class Transaction extends Model
         'transaction_type_id',
     ];
 
-    public function project()
+    public function project(): \Illuminate\Database\Eloquent\Relations\BelongsTo
     {
         return $this->belongsTo(Project::class, 'project_id');
     }
 
-    public function transaction_type()
+    public function transaction_type(): \Illuminate\Database\Eloquent\Relations\BelongsTo
     {
         return $this->belongsTo(TransactionType::class, 'transaction_type_id');
     }
 
-    public function income_source()
+    public function income_source(): \Illuminate\Database\Eloquent\Relations\BelongsTo
     {
         return $this->belongsTo(IncomeSource::class, 'income_source_id');
     }
 
-    public function currency()
+    public function currency(): \Illuminate\Database\Eloquent\Relations\BelongsTo
     {
         return $this->belongsTo(Currency::class, 'currency_id');
     }

@@ -11,10 +11,10 @@ class TransactionType extends Model
 
     public $table = 'transaction_types';
 
-    protected $dates = [
-        'created_at',
-        'updated_at',
-        'deleted_at',
+    protected $casts = [
+        'created_at' => 'datetime',
+        'updated_at' => 'datetime',
+        'deleted_at' => 'datetime',
     ];
 
     protected $fillable = [
@@ -24,7 +24,7 @@ class TransactionType extends Model
         'deleted_at',
     ];
 
-    public function transactions()
+    public function transactions(): \Illuminate\Database\Eloquent\Relations\HasMany
     {
         return $this->hasMany(Transaction::class, 'transaction_type_id', 'id');
     }
